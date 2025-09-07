@@ -47,6 +47,18 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        romantic: {
+          DEFAULT: "hsl(var(--romantic))",
+          foreground: "hsl(var(--romantic-foreground))",
+        },
+        elegant: {
+          DEFAULT: "hsl(var(--elegant))",
+          foreground: "hsl(var(--elegant-foreground))",
+        },
+        celebration: {
+          DEFAULT: "hsl(var(--celebration))",
+          foreground: "hsl(var(--celebration-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +69,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        heading: "var(--font-heading)",
+        body: "var(--font-body)",
       },
       borderRadius: {
         lg: "var(--radius)",
