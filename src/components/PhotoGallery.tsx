@@ -12,16 +12,6 @@ const PhotoGallery = () => {
       src: couplePhoto1,
       alt: 'Venkat & Haripriya - Engagement Photos',
       title: 'Our Engagement'
-    },
-    {
-      src: couplePhoto2,
-      alt: 'Venkat & Haripriya - Pre-wedding Photos',
-      title: 'Pre-wedding Moments'
-    },
-    {
-      src: ringsPhoto,
-      alt: 'Wedding Rings',
-      title: 'Our Promise'
     }
   ];
 
@@ -58,11 +48,11 @@ const PhotoGallery = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex justify-center">
             {photos.map((photo, index) => (
               <div
                 key={index}
-                className="group cursor-pointer animate-fade-in-up"
+                className="group cursor-pointer animate-fade-in-up max-w-md"
                 style={{ animationDelay: `${index * 0.1}s` }}
                 onClick={() => openLightbox(index)}
               >

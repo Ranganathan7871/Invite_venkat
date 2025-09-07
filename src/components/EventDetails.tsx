@@ -3,8 +3,7 @@ import { Button } from '@/components/ui/button';
 
 const EventDetails = () => {
   const handleMapClick = () => {
-    // You can replace this with actual venue coordinates
-    window.open('https://maps.google.com/?q=Wedding+Venue', '_blank');
+    window.open('https://maps.google.com/maps/dir/?api=1&destination=Anugraha+Party+Hall,+Kovaipudhur', '_blank');
   };
 
   return (
@@ -28,7 +27,7 @@ const EventDetails = () => {
               <h3 className="text-xl font-heading font-semibold text-foreground">Date & Time</h3>
             </div>
             <div className="space-y-2">
-              <p className="text-2xl font-heading text-primary font-semibold">November 15, 2024</p>
+              <p className="text-2xl font-heading text-primary font-semibold">November 15, 2025</p>
               <div className="flex items-center text-muted-foreground">
                 <Clock className="w-4 h-4 mr-2" />
                 <span>6:00 PM onwards</span>
@@ -44,10 +43,9 @@ const EventDetails = () => {
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-lg font-semibold text-foreground">Wedding Hall</p>
+                <p className="text-lg font-semibold text-foreground">Anugraha Party Hall</p>
                 <p className="text-muted-foreground">
-                  123 Celebration Avenue<br />
-                  Wedding City, State 12345
+                  Kovaipudhur
                 </p>
               </div>
               <Button 

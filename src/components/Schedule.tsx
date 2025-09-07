@@ -10,13 +10,6 @@ const Schedule = () => {
       color: 'text-primary'
     },
     {
-      time: '6:00 PM',
-      title: 'Wedding Ceremony',
-      description: 'Sacred vows and blessings',
-      icon: Sparkles,
-      color: 'text-celebration'
-    },
-    {
       time: '7:30 PM',
       title: 'Photography Session',
       description: 'Family photos and couple portraits',
@@ -29,13 +22,6 @@ const Schedule = () => {
       description: 'Celebration feast with family and friends',
       icon: UtensilsCrossed,
       color: 'text-primary'
-    },
-    {
-      time: '10:00 PM',
-      title: 'Music & Dancing',
-      description: 'Celebration continues with music and dance',
-      icon: Music,
-      color: 'text-celebration'
     }
   ];
 
@@ -44,7 +30,7 @@ const Schedule = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16 animate-fade-in-up">
           <h2 className="text-4xl sm:text-5xl font-heading font-semibold text-foreground mb-6">
-            Wedding Schedule
+            Reception Schedule
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A timeline of our special day's celebrations

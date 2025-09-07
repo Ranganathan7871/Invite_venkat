@@ -132,14 +132,10 @@ const RSVP = () => {
         <div className="mt-12 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
           <div className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 border border-border/30">
             <h4 className="font-heading font-semibold text-foreground mb-4">Get in Touch</h4>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-muted-foreground">
+            <div className="text-center text-sm text-muted-foreground">
               <div>
                 <p className="font-medium text-foreground">Venkat</p>
-                <p>+91 98765 43210</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Haripriya</p>
-                <p>+91 98765 43211</p>
+                <p>+91 8015938411</p>
               </div>
             </div>
           </div>

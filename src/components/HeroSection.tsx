@@ -31,7 +31,7 @@ const HeroSection = () => {
             </p>
             <div className="bg-card/80 backdrop-blur-sm shadow-romantic rounded-2xl p-6 border border-border/50 inline-block">
               <p className="text-2xl sm:text-3xl font-heading text-primary font-semibold">
-                November 15, 2024
+                November 15, 2025
               </p>
               <p className="text-base sm:text-lg text-muted-foreground mt-1">
                 6:00 PM onwards
