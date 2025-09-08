@@ -9,12 +9,6 @@ const Schedule = () => {
       color: 'text-primary'
     },
     {
-      title: 'Reception Ceremony',
-      description: 'Sacred blessings and celebrations',
-      icon: Calendar,
-      color: 'text-romantic'
-    },
-    {
       title: 'Dinner Reception',
       description: 'Celebration feast with family and friends',
       icon: UtensilsCrossed,

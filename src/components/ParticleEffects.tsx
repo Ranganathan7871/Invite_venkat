@@ -33,35 +33,30 @@ const ParticleEffects: React.FC = () => {
 
   useEffect(() => {
     let animationFrame: number;
+    let lastTime = 0;
+    const targetFPS = 60;
+    const frameInterval = 1000 / targetFPS;
     
-    const animate = () => {
-      setParticles(prev => 
-        prev.map(particle => ({
-          ...particle,
-          x: particle.x + particle.vx,
-          y: particle.y + particle.vy,
-          vy: particle.vy + 0.1, // gravity
-          life: particle.life - 1,
-          rotation: particle.rotation + particle.rotationSpeed
-        })).filter(particle => particle.life > 0)
-      );
-
-      setFloatingCouples(prev =>
-        prev.map(couple => ({
-          ...couple,
-          x: couple.x + couple.vx,
-          y: couple.y + couple.vy,
-          rotation: couple.rotation + 0.5
-        })).filter(couple => 
-          couple.x > -100 && couple.x < window.innerWidth + 100 &&
-          couple.y > -100 && couple.y < window.innerHeight + 100
-        )
-      );
+    const animate = (currentTime: number) => {
+      if (currentTime - lastTime >= frameInterval) {
+        setParticles(prev => 
+          prev.map(particle => ({
+            ...particle,
+            x: particle.x + particle.vx,
+            y: particle.y + particle.vy,
+            vy: particle.vy + 0.15, // gravity
+            life: particle.life - 1,
+            rotation: particle.rotation + particle.rotationSpeed
+          })).filter(particle => particle.life > 0)
+        );
+        
+        lastTime = currentTime;
+      }
 
       animationFrame = requestAnimationFrame(animate);
     };
 
-    animate();
+    animate(0);
     return () => cancelAnimationFrame(animationFrame);
   }, []);
 
@@ -78,8 +73,8 @@ const ParticleEffects: React.FC = () => {
           y: e.clientY + (Math.random() - 0.5) * 20,
           vx: (Math.random() - 0.5) * 2,
           vy: -Math.random() * 2 - 1,
-          life: 120,
-          maxLife: 120,
+          life: 150, // 2.5 seconds at 60fps
+          maxLife: 150,
           size: Math.random() * 15 + 10,
           rotation: Math.random() * 360,
           rotationSpeed: (Math.random() - 0.5) * 5
@@ -104,8 +99,8 @@ const ParticleEffects: React.FC = () => {
           y: e.clientY,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed - 1,
-          life: 180,
-          maxLife: 180,
+          life: 150, // 2.5 seconds at 60fps
+          maxLife: 150,
           size: Math.random() * 20 + 15,
           rotation: Math.random() * 360,
           rotationSpeed: (Math.random() - 0.5) * 8
@@ -115,31 +110,12 @@ const ParticleEffects: React.FC = () => {
       setParticles(prev => [...prev, ...newParticles]);
     };
 
-    const handleScroll = () => {
-      // Create floating couples on scroll
-      if (Math.random() > 0.8) {
-        const newCouple: FloatingCouple = {
-          id: Date.now() + Math.random(),
-          x: Math.random() * window.innerWidth,
-          y: window.innerHeight + 50,
-          vx: (Math.random() - 0.5) * 1,
-          vy: -Math.random() * 2 - 1,
-          scale: Math.random() * 0.3 + 0.2,
-          rotation: 0
-        };
-
-        setFloatingCouples(prev => [...prev, newCouple]);
-      }
-    };
-
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('click', handleClick);
-    document.addEventListener('scroll', handleScroll);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('click', handleClick);
-      document.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -168,22 +144,6 @@ const ParticleEffects: React.FC = () => {
         );
       })}
 
-      {/* Floating chibi couples */}
-      {floatingCouples.map(couple => (
-        <div
-          key={couple.id}
-          className="absolute select-none"
-          style={{
-            left: couple.x,
-            top: couple.y,
-            transform: `scale(${couple.scale}) rotate(${couple.rotation}deg)`,
-            fontSize: '60px',
-            transition: 'none'
-          }}
-        >
-          👫
-        </div>
-      ))}
     </div>
   );
 };
