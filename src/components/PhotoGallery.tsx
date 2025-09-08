@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import couplePhoto1 from '@/assets/couple-photo-1.jpg';
+import chibiCouple from '@/assets/chibi-couple.jpg';
 import couplePhoto2 from '@/assets/couple-photo-2.jpg';
 import ringsPhoto from '@/assets/rings-photo.jpg';
 
@@ -8,11 +8,7 @@ const PhotoGallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
   const photos = [
-    {
-      src: couplePhoto1,
-      alt: 'Venkat & Haripriya - Engagement Photos',
-      title: 'Our Engagement'
-    }
+    { src: chibiCouple, alt: 'Cute chibi style couple', title: 'Our Journey' }
   ];
 
   const openLightbox = (index: number) => {

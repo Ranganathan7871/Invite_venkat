@@ -3,21 +3,18 @@ import { Calendar, Users, UtensilsCrossed, Music, Sparkles } from 'lucide-react'
 const Schedule = () => {
   const events = [
     {
-      time: '5:30 PM',
       title: 'Welcome & Arrival',
       description: 'Guests arrival and welcome refreshments',
       icon: Users,
       color: 'text-primary'
     },
     {
-      time: '7:30 PM',
-      title: 'Photography Session',
-      description: 'Family photos and couple portraits',
+      title: 'Reception Ceremony',
+      description: 'Sacred blessings and celebrations',
       icon: Calendar,
       color: 'text-romantic'
     },
     {
-      time: '8:30 PM',
       title: 'Dinner Reception',
       description: 'Celebration feast with family and friends',
       icon: UtensilsCrossed,
@@ -60,13 +57,10 @@ const Schedule = () => {
                   {/* Content */}
                   <div className="ml-6 sm:ml-8 flex-1">
                     <div className="bg-card/80 backdrop-blur-sm shadow-romantic rounded-2xl p-6 border border-border/50 hover:shadow-elegant transition-shadow duration-300">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
-                        <h3 className="text-xl font-heading font-semibold text-foreground mb-1 sm:mb-0">
+                      <div className="mb-3">
+                        <h3 className="text-xl font-heading font-semibold text-foreground">
                           {event.title}
                         </h3>
-                        <span className="text-lg font-semibold text-primary">
-                          {event.time}
-                        </span>
                       </div>
                       <p className="text-muted-foreground leading-relaxed">
                         {event.description}
