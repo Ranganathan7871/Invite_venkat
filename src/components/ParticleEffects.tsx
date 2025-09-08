@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 interface Particle {
   id: number;
@@ -13,71 +13,104 @@ interface Particle {
   rotationSpeed: number;
 }
 
-interface FloatingCouple {
+interface Cupid {
   id: number;
   x: number;
   y: number;
-  vx: number;
-  vy: number;
+  visible: boolean;
+  opacity: number;
   scale: number;
-  rotation: number;
 }
 
 const ParticleEffects: React.FC = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const [floatingCouples, setFloatingCouples] = useState<FloatingCouple[]>([]);
+  const [cupid, setCupid] = useState<Cupid | null>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   // Particle emojis for petals and hearts
   const petalEmojis = ['🌸', '🌺', '💖', '💕', '🌹', '🌷'];
 
+  // Optimized animation loop
   useEffect(() => {
     let animationFrame: number;
-    let lastTime = 0;
-    const targetFPS = 60;
-    const frameInterval = 1000 / targetFPS;
     
-    const animate = (currentTime: number) => {
-      if (currentTime - lastTime >= frameInterval) {
-        setParticles(prev => 
-          prev.map(particle => ({
-            ...particle,
-            x: particle.x + particle.vx,
-            y: particle.y + particle.vy,
-            vy: particle.vy + 0.15, // gravity
-            life: particle.life - 1,
-            rotation: particle.rotation + particle.rotationSpeed
-          })).filter(particle => particle.life > 0)
-        );
+    const animate = () => {
+      // Update particles with better performance
+      setParticles(prev => {
+        if (prev.length === 0) return prev;
         
-        lastTime = currentTime;
-      }
+        return prev.map(particle => ({
+          ...particle,
+          x: particle.x + particle.vx,
+          y: particle.y + particle.vy,
+          vy: particle.vy + 0.2, // increased gravity for faster fall
+          life: particle.life - 2, // faster fade (1.25 seconds instead of 2.5)
+          rotation: particle.rotation + particle.rotationSpeed
+        })).filter(particle => particle.life > 0);
+      });
+
+      // Update cupid animation
+      setCupid(prev => {
+        if (!prev) return prev;
+        
+        if (prev.visible && prev.opacity > 0) {
+          return {
+            ...prev,
+            opacity: prev.opacity - 0.02,
+            scale: prev.scale + 0.005
+          };
+        } else if (prev.opacity <= 0) {
+          return null;
+        }
+        
+        return prev;
+      });
 
       animationFrame = requestAnimationFrame(animate);
     };
 
-    animate(0);
+    animate();
     return () => cancelAnimationFrame(animationFrame);
   }, []);
+
+  // Cupid random appearance
+  useEffect(() => {
+    const showCupid = () => {
+      if (!cupid) {
+        const newCupid: Cupid = {
+          id: Date.now(),
+          x: Math.random() * (window.innerWidth - 100),
+          y: Math.random() * (window.innerHeight - 100),
+          visible: true,
+          opacity: 1,
+          scale: 0.8
+        };
+        setCupid(newCupid);
+      }
+    };
+
+    const interval = setInterval(showCupid, Math.random() * 8000 + 5000); // 5-13 seconds
+    return () => clearInterval(interval);
+  }, [cupid]);
 
   // Mouse move handler for hover effects
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       
-      // Create particles on mouse move (hover effect)
-      if (Math.random() > 0.7) {
+      // Create particles on mouse move (hover effect) - reduced frequency for better performance
+      if (Math.random() > 0.85) {
         const newParticle: Particle = {
           id: Date.now() + Math.random(),
-          x: e.clientX + (Math.random() - 0.5) * 20,
-          y: e.clientY + (Math.random() - 0.5) * 20,
-          vx: (Math.random() - 0.5) * 2,
-          vy: -Math.random() * 2 - 1,
-          life: 150, // 2.5 seconds at 60fps
-          maxLife: 150,
+          x: e.clientX + (Math.random() - 0.5) * 15,
+          y: e.clientY + (Math.random() - 0.5) * 15,
+          vx: (Math.random() - 0.5) * 3,
+          vy: -Math.random() * 3 - 1,
+          life: 75, // 1.25 seconds for faster fade
+          maxLife: 75,
           size: Math.random() * 15 + 10,
           rotation: Math.random() * 360,
-          rotationSpeed: (Math.random() - 0.5) * 5
+          rotationSpeed: (Math.random() - 0.5) * 8
         };
 
         setParticles(prev => [...prev, newParticle]);
@@ -85,25 +118,25 @@ const ParticleEffects: React.FC = () => {
     };
 
     const handleClick = (e: MouseEvent) => {
-      // Create burst of particles on click
-      const particleCount = 15;
+      // Create burst of particles on click - optimized for better performance
+      const particleCount = 20;
       const newParticles: Particle[] = [];
 
       for (let i = 0; i < particleCount; i++) {
         const angle = (i / particleCount) * Math.PI * 2;
-        const speed = Math.random() * 3 + 2;
+        const speed = Math.random() * 4 + 3; // faster initial speed
         
         newParticles.push({
           id: Date.now() + i,
           x: e.clientX,
           y: e.clientY,
           vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed - 1,
-          life: 150, // 2.5 seconds at 60fps
-          maxLife: 150,
+          vy: Math.sin(angle) * speed - 2,
+          life: 75, // 1.25 seconds for faster fade
+          maxLife: 75,
           size: Math.random() * 20 + 15,
           rotation: Math.random() * 360,
-          rotationSpeed: (Math.random() - 0.5) * 8
+          rotationSpeed: (Math.random() - 0.5) * 12
         });
       }
 
@@ -129,7 +162,7 @@ const ParticleEffects: React.FC = () => {
         return (
           <div
             key={particle.id}
-            className="absolute select-none"
+            className="absolute select-none will-change-transform"
             style={{
               left: particle.x,
               top: particle.y,
@@ -144,6 +177,23 @@ const ParticleEffects: React.FC = () => {
         );
       })}
 
+      {/* Cupid character */}
+      {cupid && (
+        <div
+          className="absolute select-none will-change-transform animate-fade-in"
+          style={{
+            left: cupid.x,
+            top: cupid.y,
+            fontSize: '60px',
+            opacity: cupid.opacity,
+            transform: `scale(${cupid.scale})`,
+            transition: 'opacity 0.5s ease-out, transform 0.5s ease-out',
+            zIndex: 60
+          }}
+        >
+          💘
+        </div>
+      )}
     </div>
   );
 };
